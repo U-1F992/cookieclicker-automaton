@@ -335,10 +335,10 @@
     setInterval(function() {Game.ClickCookie();}, MINIMUM_TIMEOUT);
 
     /** ログ表示量を減らす */
-    let log = {
+    /* let log = {
         "alreadySent": false,
         "nextTarget": ""
-    };
+    }; */
 
     /**
      * 効率を計算して最適な施設を購入する
@@ -375,12 +375,12 @@
 
         // 次に購入するアイテムをログに出力
         // 割り込みによって変更される場合があるので名前も確認
-        if (!log.alreadySent || log.nextTarget != toBuy.name) {
+        /* if (!log.alreadySent || log.nextTarget != toBuy.name) {
             console.log(toBuy.name);
 
             log.alreadySent = true;
             log.nextTarget = toBuy.name;
-        }
+        } */
 
         if (toBuy.getPrice() <= Game.cookies) {
             // 購入前の所持数
@@ -393,10 +393,10 @@
             }
 
             // 購入数の変位で購入が完了したか確認
-            if (toBuy.amount > bought) {
+            /* if (toBuy.amount > bought) {
                 log.alreadySent = false;
                 log.nextTarget = "";
-            }
+            } */
         }
 
         /**
