@@ -1,6 +1,6 @@
 /**
  * # full-auto-cookie-clicker.js
- * v1.4
+ * v1.5
  * 全自動 Cookie Clicker (v2.031対応)
  * 
  * ## 基本方針
@@ -446,7 +446,7 @@
 
                     if (count < 3) {
                         // 2倍になる=上昇量は元のCpSに等しい
-                        return oCursor.storedCps;
+                        return oCursor.storedCps * oCursor.amount;
 
                     } else {
 
