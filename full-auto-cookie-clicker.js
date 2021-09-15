@@ -639,4 +639,12 @@
             URL.revokeObjectURL(url);
         }, 1000);
     }, BACKUP_INTERVAL);
+    
+    /**
+     * パフォーマンス改善のためミュート
+     */
+    setInterval(function() {
+        for (let i = 0; i < Game.ObjectsById.length; i++) if (Game.ObjectsById[i].amount > 0 && !Game.ObjectsById[i].muted) Game.ObjectsById[i].mute(1);
+        Game.CloseNotes();
+    }, 30 * 1000);
 })();
