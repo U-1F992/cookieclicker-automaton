@@ -36,7 +36,7 @@
     /** setIntervalのtimeoutに指定できる最短(ms) */
     const MINIMUM_TIMEOUT = 4;
     /** Ascendするまでに稼ぐHeavenlyChip数 */
-    const TARGET_HC = 1;
+    const TARGET_HC = 500;
     /** 進行状況をバックアップする間隔(ms) */
     const BACKUP_INTERVAL = 60 * 60 * 1000;
 
