@@ -1,10 +1,30 @@
 import os
 import time
 import sys
+import threading
 
 from glob import glob
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+
+ERASE_PREV_LINE = '\033[F\033[2K\033[G'
+HEADER = """
+################################
+##                            ##
+##  Full Auto Cookie Clicker  ##
+##  v2.0                      ##
+##                            ##
+##  press Ctrl+C to exit      ##
+##                            ##
+################################
+"""
+
+_next_name = ''
+_next_price = ''
+_count = ''
+_quit = False
+
+lock = threading.Lock()
 
 def count_files_in(dir):
     """
@@ -69,27 +89,37 @@ def cc_write_log(driver):
         chromedriver object
     """
 
-    log = ''
+    global _next_name
+    global _next_price
+    global _count
 
     cookies = str(driver.execute_script('return Game.cookies'))
     cps = str(driver.execute_script('return Game.cookiesPs'))
-    next_name = str(driver.execute_script('return next_to_buy'))
+    next_name = str(driver.execute_script('return document.getElementById("__script_next_to_buy_name").value'))
+    next_price = str(driver.execute_script('return document.getElementById("__script_next_to_buy_price").value'))
+    meter = str(driver.execute_script('return Game.ascendMeterLevel'))
+    count = str(driver.execute_script('return document.getElementById("__script_ascension_count").value'))
 
+    log = ''
+
+    log += 'Next\t: ' + next_price + ' (' + next_name + ')\n'
     log += 'Cookies\t: ' + cookies + '\n'
     log += 'CpS\t: ' + cps + '\n'
     log += '\n'
-    log += 'Next => ' + next_name + '\n'
+    log += 'Ascend\n'
+    log += '  Meter\t: ' + meter + ' / 250\n'
+    log += '  Count\t: ' + count + '\n'
 
-    Cursor_Previous_Line = '\033[F'
-    Cursor_Horizontal_Absolute = '\033[G'
-    Erase_in_entire_Line = '\033[2K'
-
-    sys.stdout.write(Cursor_Previous_Line + Erase_in_entire_Line + Cursor_Previous_Line + Erase_in_entire_Line + Cursor_Horizontal_Absolute + "%s" % log)
+    sys.stdout.write(ERASE_PREV_LINE * 7)
+    sys.stdout.write(log)
     sys.stdout.flush()
 
-    time.sleep(0.1)
-
 def main():
+    
+    global _quit
+
+    print(HEADER)
+
     options = Options()
     options.add_argument('--headless')
 
@@ -102,16 +132,18 @@ def main():
     js = open('full-auto-cookie-clicker.js', 'r').read()
     driver.execute_script(js)
 
-    print('dummy_output\n')
+    print('dummy_output\n' * 6)
     try:
         while True:
             cc_write_log(driver)
 
     except KeyboardInterrupt:
         # press Ctrl+C to exit
+        sys.stdout.write('\033[2K')
+        _quit = True
         pass
 
-    sys.stdout.write("\033[2K\033[G%s" % 'exit\n')
+    sys.stdout.write(ERASE_PREV_LINE * 7)
     sys.stdout.flush()
 
     try:

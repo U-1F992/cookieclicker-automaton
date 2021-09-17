@@ -1,5 +1,21 @@
 /** Ascend回数を記録 */
 let ascension_count = 0;
+/** 次に購入するものをdriverに教える */
+let next_to_buy = {
+    "name": "",
+    "price": 0
+};
+
+/** 不可視のDOM要素としてnext_to_buyとascension_countを書き込む */
+// 名前/値段/回数
+const arr_p = [ document.createElement("p"), document.createElement("p"), document.createElement("p") ];
+arr_p[0].id = "__script_next_to_buy_name";
+arr_p[1].id = "__script_next_to_buy_price";
+arr_p[2].id = "__script_ascension_count";
+for (let i = 0; i < arr_p.length; i++) {
+    arr_p[i].style.display = 'none';
+    document.body.appendChild(arr_p[i]);
+}
 
 (function(){
     "use strict";
@@ -7,7 +23,7 @@ let ascension_count = 0;
     /** setIntervalのtimeoutに指定できる最短(ms) */
     const MINIMUM_TIMEOUT = 4;
     /** Ascendするまでに稼ぐHeavenlyChip数 */
-    const TARGET_HC = 500;
+    const TARGET_HC = 250;
     /** 進行状況をバックアップする間隔(ms) */
     const BACKUP_INTERVAL = 60 * 60 * 1000;
 
@@ -306,10 +322,10 @@ let ascension_count = 0;
     setInterval(function() {Game.ClickCookie();}, MINIMUM_TIMEOUT);
 
     /** ログ表示量を減らす */
-    /* let log = {
+    let log = {
         "alreadySent": false,
         "nextTarget": ""
-    }; */
+    };
 
     /**
      * 効率を計算して最適な施設を購入する
@@ -346,12 +362,15 @@ let ascension_count = 0;
 
         // 次に購入するアイテムをログに出力
         // 割り込みによって変更される場合があるので名前も確認
-        /* if (!log.alreadySent || log.nextTarget != toBuy.name) {
+        if (!log.alreadySent || log.nextTarget != toBuy.name) {
             console.log(toBuy.name);
 
             log.alreadySent = true;
             log.nextTarget = toBuy.name;
-        } */
+
+            next_to_buy.name = toBuy.name;
+            next_to_buy.price = toBuy.getPrice();
+        }
 
         if (toBuy.getPrice() <= Game.cookies) {
             // 購入前の所持数
@@ -364,10 +383,10 @@ let ascension_count = 0;
             }
 
             // 購入数の変位で購入が完了したか確認
-            /* if (toBuy.amount > bought) {
+            if (toBuy.amount > bought) {
                 log.alreadySent = false;
                 log.nextTarget = "";
-            } */
+            }
         }
 
         /**
@@ -611,6 +630,13 @@ let ascension_count = 0;
             URL.revokeObjectURL(url);
         }, 1000);
     }, BACKUP_INTERVAL);
+
+    /** 不可視のDOM要素としてnext_to_buyとascension_countを書き込む */
+    setInterval(function() {
+        arr_p[0].value = next_to_buy.name;
+        arr_p[1].value = next_to_buy.price;
+        arr_p[2].value = ascension_count;
+    }, MINIMUM_TIMEOUT)
     
     /**
      * パフォーマンス改善のためミュート
