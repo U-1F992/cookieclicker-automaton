@@ -28,7 +28,7 @@ sudo apt install ./google-chrome-stable_current_amd64.deb
 # https://chromedriver.chromium.org/downloads
 curl -O https://chromedriver.storage.googleapis.com/93.0.4577.63/chromedriver_linux64.zip
 unzip chromedriver_linux64.zip
-sudo mv chromedriver /usr/local/bin/
+sudo mv chromedriver /usr/bin/
 
 # confirm
 which google-chrome
