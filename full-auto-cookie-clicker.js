@@ -30,6 +30,8 @@
  *   - cps(), baseCps, storedCpsは同じ値を返し、storedTotalCpsはこれらにamountをかけた値を返すが、いずれも現在のCpSとは異なる？
  */
 
+/** Ascend回数を記録 */
+let ascension_count = 0;
 (function(){
     "use strict";
 
@@ -562,6 +564,7 @@
         if (Game.ascendMeterLevel - start_hc < TARGET_HC) return;
 
         Game.Ascend(1);
+        ascension_count++;
 
         setTimeout(function() {
             let oLegacy = Game.UpgradesById[363];
