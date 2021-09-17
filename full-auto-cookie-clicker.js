@@ -1,37 +1,6 @@
-/**
- * # full-auto-cookie-clicker.js
- * v1.5
- * 全自動 Cookie Clicker (v2.031対応)
- * 
- * ## 基本方針
- * 全施設と一部のアップグレードについて
- * (購入費用) * (1 + (現在の基礎CpS) / (購入によるCpS上昇))
- * が最小の要素を購入する
- * 
- * ## 平行要素
- * - 自動クリック(実測 150~200回/s)
- * - Golden Cookieは常時監視して瞬時に潰す
- * - 全てのwrinklerを瞬時に潰す
- * - 上記以外のアップグレードは購入可能時に逐次購入する
- *   - 基本方針に割り込みが発生し、購入順序が変わる可能性がある
- * - Heavenly ChipをTARGET_HC枚稼ぐ毎にAscendする
- *   - Prestigeは可能な限り購入する
- *   - 7秒後にReincarnate
- * - BACKUP_INTERVAL毎にセーブをダウンロードさせる
- * 
- * ## 参考
- * [Cookie Clicker](URL: https://orteil.dashnet.org/cookieclicker/)
- * [cookie clicker 日本語wiki](https://w.atwiki.jp/cookieclickerjpn/)
- * [Cookie Clicker で効率的に True Neverclick を取得する方法](https://inuwara-note.hateblo.jp/entry/cookie-clicker-2)
- * [【クッキー】CookieClicker【ババア】 9枚目](https://uni.5ch.net/test/read.cgi/gameswf/1380563429/275?v=pc)
- * 
- * ## 既知の問題点
- * - オブジェクト毎の現在のCpSを取得する手順が確立していない
- *   - cps(), baseCps, storedCpsは同じ値を返し、storedTotalCpsはこれらにamountをかけた値を返すが、いずれも現在のCpSとは異なる？
- */
-
 /** Ascend回数を記録 */
 let ascension_count = 0;
+
 (function(){
     "use strict";
 
