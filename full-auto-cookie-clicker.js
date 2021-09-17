@@ -1,21 +1,7 @@
-/** Ascend回数を記録 */
-let ascension_count = 0;
-/** 次に購入するものをdriverに教える */
-let next_to_buy = {
-    "name": "",
-    "price": 0
-};
 
-/** 不可視のDOM要素としてnext_to_buyとascension_countを書き込む */
-// 名前/値段/回数
-const arr_p = [ document.createElement("p"), document.createElement("p"), document.createElement("p") ];
-arr_p[0].id = "__script_next_to_buy_name";
-arr_p[1].id = "__script_next_to_buy_price";
-arr_p[2].id = "__script_ascension_count";
-for (let i = 0; i < arr_p.length; i++) {
-    arr_p[i].style.display = 'none';
-    document.body.appendChild(arr_p[i]);
-}
+Game.__script_next_to_buy_name = "";
+Game.__script_next_to_buy_price = 0;
+Game.__script_ascend_count = 0;
 
 (function(){
     "use strict";
@@ -368,8 +354,8 @@ for (let i = 0; i < arr_p.length; i++) {
             log.alreadySent = true;
             log.nextTarget = toBuy.name;
 
-            next_to_buy.name = toBuy.name;
-            next_to_buy.price = toBuy.getPrice();
+            Game.__script_next_to_buy_name = toBuy.name;
+            Game.__script_next_to_buy_price = toBuy.getPrice();
         }
 
         if (toBuy.getPrice() <= Game.cookies) {
@@ -552,7 +538,7 @@ for (let i = 0; i < arr_p.length; i++) {
         if (Game.ascendMeterLevel - start_hc < TARGET_HC) return;
 
         Game.Ascend(1);
-        ascension_count++;
+        Game.__script_ascend_count++;
 
         setTimeout(function() {
             let oLegacy = Game.UpgradesById[363];
@@ -630,19 +616,4 @@ for (let i = 0; i < arr_p.length; i++) {
             URL.revokeObjectURL(url);
         }, 1000);
     }, BACKUP_INTERVAL);
-
-    /** 不可視のDOM要素としてnext_to_buyとascension_countを書き込む */
-    setInterval(function() {
-        arr_p[0].value = next_to_buy.name;
-        arr_p[1].value = next_to_buy.price;
-        arr_p[2].value = ascension_count;
-    }, MINIMUM_TIMEOUT)
-    
-    /**
-     * パフォーマンス改善のためミュート
-     */
-    /* setInterval(function() {
-        for (let i = 0; i < Game.ObjectsById.length; i++) if (Game.ObjectsById[i].amount > 0 && !Game.ObjectsById[i].muted) Game.ObjectsById[i].mute(1);
-        Game.CloseNotes();
-    }, 30 * 1000); */
 })();
