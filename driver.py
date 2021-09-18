@@ -113,10 +113,10 @@ def cc_write_log(driver):
     try:
         status = driver.execute_script('''
         return {
-            "cookies": Beautify(Game.cookies),
-            "cps": Beautify(Game.cookiesPs),
+            "cookies": Beautify(Game.cookies, 3),
+            "cps": Beautify(Game.cookiesPs, 3),
             "next_name": Game.__script_next_name,
-            "next_price": Beautify(Game.__script_next_price),
+            "next_price": Beautify(Game.__script_next_price, 3),
             "ascend_meter": Game.ascendMeterLevel,
             "ascend_count": Game.__script_ascend_count,
             "save_string": Game.__script_save_string

@@ -320,7 +320,7 @@ Game.__script_save_string = "";
         // 施設
         let building_efficiency = [];
         for (let i = 0; i < Game.ObjectsById.length; i++) {
-            building_efficiency.push(Game.ObjectsById[i].getPrice() * (1 + Game.cookiesPsRaw / Game.ObjectsById[i].storedCps));
+            building_efficiency.push(Game.ObjectsById[i].getPrice() * (1 + Game.cookiesPsRaw / getSingleCpsOf(Game.ObjectsById[i])));
         }
         
         // アップグレード
@@ -420,7 +420,7 @@ Game.__script_save_string = "";
 
                     if (count < 3) {
                         // 2倍になる=上昇量は元のCpSに等しい
-                        return oCursor.storedCps * oCursor.amount;
+                        return getTotalCpsOf(oCursor);
 
                     } else {
 
@@ -462,8 +462,8 @@ Game.__script_save_string = "";
                     /** シナジー対象は count で保有している */
                     let oSynergy = Game.ObjectsById[count];
     
-                    let increase_from_grandmas = oGrandma.storedCps * oGrandma.amount;
-                    let increase_from_synergy = (oSynergy.storedCps * oSynergy.amount) * (oGrandma.amount / (count - 1) / 100);
+                    let increase_from_grandmas = getTotalCpsOf(oGrandma);
+                    let increase_from_synergy = getTotalCpsOf(oSynergy) * (oGrandma.amount / (count - 1) / 100);
     
                     return increase_from_grandmas + increase_from_synergy;
                 }
@@ -476,13 +476,13 @@ Game.__script_save_string = "";
                     let oGrandma = Game.ObjectsById[KEY.GRANDMA];
                     switch (count) {
                         case 0:
-                            return oGrandma.storedCps * oGrandma.amount * 3;
+                            return getTotalCpsOf(oGrandma) * 3;
                         case 1:
                             return Game.cookiesPsRaw * 0.01;
                         case 2:
                             return Game.cookiesPsRaw * 0.02;
                         case 3:
-                            return oGrandma.storedCps * oGrandma.amount;
+                            return getTotalCpsOf(oGrandma);
                         case 4:
                             return Game.cookiesPsRaw * 0.03;
                         case 5:
@@ -504,8 +504,36 @@ Game.__script_save_string = "";
                  * 上昇量は現在のCpSに等しい
                  */
                 default:
-                    return Game.ObjectsById[building].storedCps * Game.ObjectsById[building].amount;
+                    return getTotalCpsOf(Game.ObjectsById[building]);
                 
+            }
+        }
+
+        /**
+         * 施設1つ分のCpSを計算する
+         * 
+         * @param {Object} obj Game.Upgrades[n]
+         * @returns 施設1つ分のCpS
+         */
+        function getSingleCpsOf(obj) {
+            if (obj.amount != 0) {
+                return (obj.storedTotalCps / obj.amount) * Game.globalCpsMult;
+            } else {
+                return obj.baseCps * Game.globalCpsMult;
+            }
+        }
+
+        /**
+         * 施設全体のCpSを計算する
+         * 
+         * @param {Object} obj Game.Upgrades[n]
+         * @returns 施設全体のCpS
+         */
+        function getTotalCpsOf(obj) {
+            if (obj.amount != 0) {
+                return obj.storedTotalCps * Game.globalCpsMult;
+            } else {
+                return 0;
             }
         }
     }, MINIMUM_TIMEOUT);
