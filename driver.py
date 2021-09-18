@@ -14,7 +14,7 @@ HEADER = """
 ################################
 ##                            ##
 ##  Full Auto Cookie Clicker  ##
-##  v2.3                      ##
+##  v2.4                      ##
 ##                            ##
 ################################
 """
@@ -113,10 +113,10 @@ def cc_write_log(driver):
     try:
         status = driver.execute_script('''
         return {
-            "cookies": Beautify(Game.cookies, 3),
-            "cps": Beautify(Game.cookiesPs, 3),
+            "cookies": Beautify(Game.cookies),
+            "cps": Beautify(Game.cookiesPs),
             "next_name": Game.__script_next_name,
-            "next_price": Beautify(Game.__script_next_price, 3),
+            "next_price": Beautify(Game.__script_next_price),
             "ascend_meter": Game.ascendMeterLevel,
             "ascend_count": Game.__script_ascend_count,
             "save_string": Game.__script_save_string
@@ -134,7 +134,7 @@ def cc_write_log(driver):
     count = str(status["ascend_count"])
     _save = str(status["save_string"])
 
-    log = '\033[39m\033[15F\033[38C' + 'Full Auto Cookie Clicker v2.3'
+    log = '\033[39m\033[15F\033[38C' + 'Full Auto Cookie Clicker v2.4'
 
     log += '\033[2E\033[38C\033[K' + 'Next\t: ' + next_price + ' (' + next_name + ')'
     log += '\033[1E\033[38C\033[K' + 'Cookies\t: ' + cookies
