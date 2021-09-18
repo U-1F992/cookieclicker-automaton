@@ -1,10 +1,14 @@
 import os
-import time
 import sys
+import time
+import datetime
 
 from glob import glob
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+
+_quit = False
+_save = ""
 
 HEADER = """
 ################################
@@ -49,7 +53,12 @@ def count_files_in(dir):
         number of files
 
     """
-    return len([name for name in os.listdir(dir) if os.path.isfile(os.path.join(dir, name))])
+
+    if os.path.isdir(dir):
+        return len([name for name in os.listdir(dir) if os.path.isfile(os.path.join(dir, name))])
+    else:
+        os.makedirs(dir)
+        return 0
 
 def get_latest_file(dir):
     """
@@ -97,22 +106,33 @@ def cc_write_log(driver):
         chromedriver object
     """
 
-    status = driver.execute_script('''
-    return {
-        "cookies": Game.cookies,
-        "cps": Game.cookiesPs,
-        "next_name": Game.__script_next_name,
-        "next_price": Game.__script_next_price,
-        "ascend_meter": Game.ascendMeterLevel,
-        "ascend_count": Game.__script_ascend_count
-    }
-    ''')
+    global _quit
+    global _save
+
+    status = {}
+    try:
+        status = driver.execute_script('''
+        return {
+            "cookies": Game.cookies,
+            "cps": Game.cookiesPs,
+            "next_name": Game.__script_next_name,
+            "next_price": Game.__script_next_price,
+            "ascend_meter": Game.ascendMeterLevel,
+            "ascend_count": Game.__script_ascend_count,
+            "save_string": Game.__script_save_string
+        }
+        ''')
+    except:
+        _quit = True
+        return
+
     cookies = str(status["cookies"])
     cps = str(status["cps"])
     next_name = str(status["next_name"])
     next_price = str(status["next_price"])
     meter = str(status["ascend_meter"])
     count = str(status["ascend_count"])
+    _save = str(status["save_string"])
 
     log = '\033[39m\033[15F\033[38C' + 'Full Auto Cookie Clicker v2.0'
 
@@ -129,7 +149,25 @@ def cc_write_log(driver):
     sys.stdout.write(log)
     sys.stdout.flush()
 
+def cc_export_save(dir):
+    """
+    Export save from script
+    
+    Parameters
+    ----------
+    dir : str
+        directory to save
+    """
+    global _save
+    save = open(os.path.join(dir, 'cc_bkp_' + str(datetime.datetime.now()).replace(':', '-').replace(' ', '-').replace('.', '-').replace('-', '') + '.txt'), 'w')
+    if _save != "":
+        save.write(_save)
+    save.close()
+
 def main():
+
+    global _quit
+    global _save
 
     print(HEADER)
 
@@ -162,14 +200,25 @@ def main():
     sys.stdout.writelines(COOKIE + '\n')
     sys.stdout.flush()
 
+    s = time.time()
     try:
         while True:
             cc_write_log(driver)
+
+            # autosave every 30 minutes
+            if time.time() - s > 30 * 60:
+                cc_export_save('./bkp')
+                s = time.time()
+
+            if _quit:
+                raise KeyboardInterrupt
 
     except KeyboardInterrupt:
         # press Ctrl+C to exit
         sys.stdout.write('\033[2K')
         pass
+
+    cc_export_save('./bkp')
 
     sys.stdout.write('\033[1F\033[K' * 17)
     sys.stdout.flush()

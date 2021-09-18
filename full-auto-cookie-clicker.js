@@ -2,6 +2,7 @@
 Game.__script_next_name = "";
 Game.__script_next_price = 0;
 Game.__script_ascend_count = 0;
+Game.__script_save_string = "";
 
 (function(){
     "use strict";
@@ -11,7 +12,7 @@ Game.__script_ascend_count = 0;
     /** Ascendするまでに稼ぐHeavenlyChip数 */
     const TARGET_HC = 250;
     /** 進行状況をバックアップする間隔(ms) */
-    const BACKUP_INTERVAL = 60 * 60 * 1000;
+    const BACKUP_INTERVAL = 60 * 1000;
 
     /**
      * 効果を加味して購入するアップグレード一覧
@@ -569,9 +570,9 @@ Game.__script_ascend_count = 0;
                 } catch (e) {}
             } while (toBuy.length != 0);
 
+            setTimeout(function(){Game.Reincarnate(1); start_hc = Game.ascendMeterLevel;}, 2 * 1000);
+
         }, 5 * 1000)
-        
-        setTimeout(function(){Game.Reincarnate(1); start_hc = Game.ascendMeterLevel;}, 7 * 1000);
     }, MINIMUM_TIMEOUT);
 
     /**
@@ -602,18 +603,8 @@ Game.__script_ascend_count = 0;
 
         setTimeout(function() {
             Game.ExportSave();
-            const save = document.getElementById("textareaPrompt").value;
+            Game.__script_save_string = document.getElementById("textareaPrompt").value;
             Game.ClosePrompt();
-
-            const blob = new Blob([ save ], { "type" : "text/plain" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            document.body.appendChild(a);
-            a.download = "cc_bkp_" + Date.now() + ".txt";
-            a.href = url;
-            a.click();
-            a.remove();
-            URL.revokeObjectURL(url);
         }, 1000);
     }, BACKUP_INTERVAL);
 })();
