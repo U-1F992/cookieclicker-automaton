@@ -14,7 +14,7 @@ HEADER = """
 ################################
 ##                            ##
 ##  Full Auto Cookie Clicker  ##
-##  v2.0                      ##
+##  v2.2                      ##
 ##                            ##
 ################################
 """
@@ -134,7 +134,7 @@ def cc_write_log(driver):
     count = str(status["ascend_count"])
     _save = str(status["save_string"])
 
-    log = '\033[39m\033[15F\033[38C' + 'Full Auto Cookie Clicker v2.0'
+    log = '\033[39m\033[15F\033[38C' + 'Full Auto Cookie Clicker v2.2'
 
     log += '\033[2E\033[38C\033[K' + 'Next\t: ' + next_price + ' (' + next_name + ')'
     log += '\033[1E\033[38C\033[K' + 'Cookies\t: ' + cookies

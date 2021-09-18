@@ -11,7 +11,7 @@ Game.__script_save_string = "";
     const MINIMUM_TIMEOUT = 4;
     /** Ascendするまでに稼ぐHeavenlyChip数 */
     const TARGET_HC = 250;
-    /** 進行状況をバックアップする間隔(ms) */
+    /** save_stringを更新する間隔(ms) */
     const BACKUP_INTERVAL = 60 * 1000;
 
     /**
@@ -597,7 +597,7 @@ Game.__script_save_string = "";
         return UPGRADE_TO_BYPASS.includes(obj.name) ? true : false;
     }
 
-    /** BACKUP_INTERVAL毎にセーブをダウンロードさせる */
+    /** BACKUP_INTERVAL毎にセーブを更新する */
     setInterval(function() {
         Game.toSave=true;
 

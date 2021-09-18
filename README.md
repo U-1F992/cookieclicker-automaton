@@ -1,11 +1,11 @@
 
-# full-auto-cookie-clicker.js
+# Full Auto Cookie Clicker
 
 全自動 Cookie Clicker (v2.031対応)
 
 ## Version
 
-v2.0
+v2.2
 
 ## Requirements
 
@@ -52,7 +52,8 @@ which chrome-driver
 - Heavenly ChipをTARGET_HC枚稼ぐ毎にAscendする
   - Prestigeは可能な限り購入する
   - 7秒後にReincarnate
-- BACKUP_INTERVAL毎にセーブをダウンロードさせる
+- BACKUP_INTERVAL毎にセーブを更新し、30分毎に ```./bkp``` 以下に保存する
+- 終了時に現在の進行状況を出力する
 
 ## 参考
 
