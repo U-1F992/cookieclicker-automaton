@@ -302,9 +302,6 @@ Game.__script_save_string = "";
     /** ババアポ解除関連アイテムを無効化 */
     const UPGRADE_TO_BYPASS = [ 'Elder Pledge', 'Sacrificial rolling pins', 'Elder Covenant', 'Revoke Elder Covenant' ];
 
-    /** 周回毎に初期HC枚数を記録し、増加分で転生させる */
-    let start_hc = Game.ascendMeterLevel;
-
     /** 自動クリック */
     setInterval(function() {Game.ClickCookie();}, MINIMUM_TIMEOUT);
 
@@ -536,7 +533,7 @@ Game.__script_save_string = "";
     /** Heavenly ChipをTARGET_HC枚稼ぐ毎にAscendする */
     setInterval(function(){
 
-        if (Game.ascendMeterLevel - start_hc < TARGET_HC) return;
+        if (Game.ascendMeterLevel < TARGET_HC) return;
 
         Game.Ascend(1);
         Game.__script_ascend_count++;
@@ -570,7 +567,7 @@ Game.__script_save_string = "";
                 } catch (e) {}
             } while (toBuy.length != 0);
 
-            setTimeout(function(){Game.Reincarnate(1); start_hc = Game.ascendMeterLevel;}, 2 * 1000);
+            setTimeout(function(){Game.Reincarnate(1);}, 2 * 1000);
 
         }, 5 * 1000)
     }, MINIMUM_TIMEOUT);
