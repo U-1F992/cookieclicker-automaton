@@ -113,6 +113,7 @@ def cc_write_log(driver):
     try:
         status = driver.execute_script('''
         return {
+            "bakery_name": Game.bakeryName,
             "cookies": Beautify(Game.cookies),
             "cps": Beautify(Game.cookiesPs),
             "next_name": Game.__script_next_name,
@@ -127,6 +128,7 @@ def cc_write_log(driver):
         _quit = True
         return
 
+    bakery_name = str(status["bakery_name"])
     cookies = str(status["cookies"])
     cps = str(status["cps"])
     next_name = str(status["next_name"])
@@ -136,7 +138,7 @@ def cc_write_log(driver):
     count = str(status["ascend_count"])
     _save = str(status["save_string"])
 
-    log = '\033[39m\033[15F\033[38C' + 'Full Auto Cookie Clicker v2.6'
+    log = '\033[39m\033[15F\033[38C' + bakery_name + '\'s bakery'
 
     log += '\033[2E\033[38C\033[K' + 'Next\t: ' + next_price + ' (' + next_name + ')'
     log += '\033[1E\033[38C\033[K' + 'Cookies\t: ' + cookies
