@@ -14,7 +14,7 @@ HEADER = """
 ################################
 ##                            ##
 ##  Full Auto Cookie Clicker  ##
-##  v2.4                      ##
+##  v2.6                      ##
 ##                            ##
 ################################
 """
@@ -117,9 +117,10 @@ def cc_write_log(driver):
             "cps": Beautify(Game.cookiesPs),
             "next_name": Game.__script_next_name,
             "next_price": Beautify(Game.__script_next_price),
-            "ascend_meter": Game.ascendMeterLevel,
-            "ascend_count": Game.__script_ascend_count,
-            "save_string": Game.__script_save_string
+            "ascend_meter": Beautify(Game.ascendMeterLevel),
+            "next_ascend_meter": Beautify(Game.__script_next_ascend_meter),
+            "ascend_count": Beautify(Game.__script_ascend_count),
+            "save_string": Game.WriteSave(1)
         }
         ''')
     except:
@@ -131,17 +132,18 @@ def cc_write_log(driver):
     next_name = str(status["next_name"])
     next_price = str(status["next_price"])
     meter = str(status["ascend_meter"])
+    next_ascend_meter = str(status["next_ascend_meter"])
     count = str(status["ascend_count"])
     _save = str(status["save_string"])
 
-    log = '\033[39m\033[15F\033[38C' + 'Full Auto Cookie Clicker v2.4'
+    log = '\033[39m\033[15F\033[38C' + 'Full Auto Cookie Clicker v2.6'
 
     log += '\033[2E\033[38C\033[K' + 'Next\t: ' + next_price + ' (' + next_name + ')'
     log += '\033[1E\033[38C\033[K' + 'Cookies\t: ' + cookies
     log += '\033[1E\033[38C\033[K' + 'CpS\t: ' + cps
     #log += '\n'
     log += '\033[2E\033[38C\033[K' + 'Ascend'
-    log += '\033[1E\033[38C\033[K' + '  Meter\t: ' + meter + ' / 250'
+    log += '\033[1E\033[38C\033[K' + '  Meter\t: ' + meter + ' / ' + next_ascend_meter
     log += '\033[1E\033[38C\033[K' + '  Count\t: ' + count
     #log += '\n'
     log += '\033[3E\033[38C\033[K' + 'Press Ctrl+C to exit' + '\033[4E'

@@ -5,7 +5,7 @@
 
 ## Version
 
-v2.4
+v2.6
 
 ## Requirements
 
@@ -49,11 +49,11 @@ which chrome-driver
 - 全てのwrinklerを瞬時に潰す
 - 上記以外のアップグレードは購入可能時に逐次購入する
   - 基本方針に割り込みが発生し、購入順序が変わる可能性がある
-- Heavenly ChipをTARGET_HC枚稼ぐ毎にAscendする
-  - Prestigeは可能な限り購入する
+- Heavenly Chipを250枚稼ぐ毎にAscendする
+  - 2回目以降、最も安いプレステージアップグレードの価格が250を上回った場合その価格の4/3まで稼ぐ
   - 7秒後にReincarnate
-- BACKUP_INTERVAL毎にセーブを更新し、30分毎に ```./bkp``` 以下に保存する
-- 終了時に現在の進行状況を出力する
+- 30分毎にセーブデータを ```./bkp``` 以下に保存する
+- 終了時にセーブデータを出力する
 
 ## 参考
 
@@ -61,8 +61,3 @@ which chrome-driver
 - [cookie clicker 日本語wiki](https://w.atwiki.jp/cookieclickerjpn/)
 - [Cookie Clicker で効率的に True Neverclick を取得する方法](https://inuwara-note.hateblo.jp/entry/cookie-clicker-2)
 - [【クッキー】CookieClicker【ババア】 9枚目](https://uni.5ch.net/test/read.cgi/gameswf/1380563429/275?v=pc)
-
-## 既知の問題点
-
-- オブジェクト毎の現在のCpSを取得する手順が確立していない
-  - cps(), baseCps, storedCpsは同じ値を返し、storedTotalCpsはこれらにamountをかけた値を返すが、いずれも現在のCpSとは異なる？

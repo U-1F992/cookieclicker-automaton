@@ -2,17 +2,17 @@
 Game.__script_next_name = "";
 Game.__script_next_price = 0;
 Game.__script_ascend_count = 0;
-Game.__script_save_string = "";
+/** 
+ * Ascendするまでに稼ぐHeavenlyChip数
+ * 初期値は250
+ */
+Game.__script_next_ascend_meter = 250;
 
 (function(){
     "use strict";
 
     /** setIntervalのtimeoutに指定できる最短(ms) */
     const MINIMUM_TIMEOUT = 4;
-    /** Ascendするまでに稼ぐHeavenlyChip数 */
-    const TARGET_HC = 250;
-    /** save_stringを更新する間隔(ms) */
-    const BACKUP_INTERVAL = 60 * 1000;
 
     /**
      * 効果を加味して購入するアップグレード一覧
@@ -560,12 +560,12 @@ Game.__script_save_string = "";
 
     let while_ascend = false;
     /**
-     * Heavenly ChipをTARGET_HC枚稼ぐ毎にAscendする
+     * Heavenly ChipをGame.__script_next_ascend_meter枚稼ぐ毎にAscendする
      * 30秒毎に確認
      */
     setInterval(function(){
 
-        if (Game.ascendMeterLevel < TARGET_HC || while_ascend) return;
+        if (Game.ascendMeterLevel < Game.__script_next_ascend_meter || while_ascend) return;
 
         while_ascend = true;
         Game.Ascend(1);
@@ -598,6 +598,7 @@ Game.__script_save_string = "";
                     toBuy[0].buy();
                 } catch (e) {}
             } while (toBuy.length != 0);
+            updateNextAscendMeter();
 
             setTimeout(function() {
                 Game.Reincarnate(1);
@@ -605,8 +606,27 @@ Game.__script_save_string = "";
                 while_ascend = false;
             }, 2 * 1000);
 
+            /**
+             * Game.__script_next_ascend_meter を更新する
+             * 
+             * 購入可能なプレステージアップグレードを安価な順に並び替え、
+             * 最も安いものが250を上回る場合、その価格の4/3
+             * そうでない場合250
+             */
+            function updateNextAscendMeter(){
+
+                let toBuy = [];
+                for (let i = 0; i < Game.UpgradesById.length; i++) {
+                    let oPrestige = Game.UpgradesById[i];
+                    if (oPrestige.pool == "prestige" && oPrestige.name.indexOf("Permanent upgrade slot") == -1 &&　oPrestige.canBePurchased && oPrestige.bought == 0) toBuy.push(oPrestige);
+                }
+                toBuy.sort(function(a,b) {if (a.getPrice() < b.getPrice()) {return -1;} else {return 1;}});
+                
+                Game.__script_next_ascend_meter = toBuy[0].getPrice() < 250 ? 250 : toBuy[0].getPrice() * 4 / 3;
+            }
+
         }, 5 * 1000)
-    }, 30 * 1000);
+    }, 10 * 1000);
 
     /**
      * UPGRADE_NAME に登録されたアップグレードは、施設と同時に効果を加味して購入する
@@ -629,15 +649,4 @@ Game.__script_save_string = "";
     function isBypassed(obj) {
         return UPGRADE_TO_BYPASS.includes(obj.name) ? true : false;
     }
-
-    /** BACKUP_INTERVAL毎にセーブを更新する */
-    setInterval(function() {
-        Game.toSave=true;
-
-        setTimeout(function() {
-            Game.ExportSave();
-            Game.__script_save_string = document.getElementById("textareaPrompt").value;
-            Game.ClosePrompt();
-        }, 1000);
-    }, BACKUP_INTERVAL);
 })();
