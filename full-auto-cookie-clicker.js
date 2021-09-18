@@ -530,13 +530,17 @@ Game.__script_save_string = "";
         }
     }, MINIMUM_TIMEOUT);
 
-    /** Heavenly ChipをTARGET_HC枚稼ぐ毎にAscendする */
+    let while_ascend = false;
+    /**
+     * Heavenly ChipをTARGET_HC枚稼ぐ毎にAscendする
+     * 30秒毎に確認
+     */
     setInterval(function(){
 
-        if (Game.ascendMeterLevel < TARGET_HC) return;
+        if (Game.ascendMeterLevel < TARGET_HC || while_ascend) return;
 
+        while_ascend = true;
         Game.Ascend(1);
-        Game.__script_ascend_count++;
 
         setTimeout(function() {
             let oLegacy = Game.UpgradesById[363];
@@ -567,10 +571,14 @@ Game.__script_save_string = "";
                 } catch (e) {}
             } while (toBuy.length != 0);
 
-            setTimeout(function(){Game.Reincarnate(1);}, 2 * 1000);
+            setTimeout(function() {
+                Game.Reincarnate(1);
+                Game.__script_ascend_count++;
+                while_ascend = false;
+            }, 2 * 1000);
 
         }, 5 * 1000)
-    }, MINIMUM_TIMEOUT);
+    }, 30 * 1000);
 
     /**
      * UPGRADE_NAME に登録されたアップグレードは、施設と同時に効果を加味して購入する
