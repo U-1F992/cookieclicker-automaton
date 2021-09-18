@@ -1,6 +1,6 @@
 
-Game.__script_next_to_buy_name = "";
-Game.__script_next_to_buy_price = 0;
+Game.__script_next_name = "";
+Game.__script_next_price = 0;
 Game.__script_ascend_count = 0;
 
 (function(){
@@ -354,8 +354,8 @@ Game.__script_ascend_count = 0;
             log.alreadySent = true;
             log.nextTarget = toBuy.name;
 
-            Game.__script_next_to_buy_name = toBuy.name;
-            Game.__script_next_to_buy_price = toBuy.getPrice();
+            Game.__script_next_name = toBuy.name;
+            Game.__script_next_price = toBuy.getPrice();
         }
 
         if (toBuy.getPrice() <= Game.cookies) {

@@ -1,4 +1,3 @@
-from io import DEFAULT_BUFFER_SIZE
 import os
 import time
 import sys
@@ -98,12 +97,22 @@ def cc_write_log(driver):
         chromedriver object
     """
 
-    cookies = str(driver.execute_script('return Game.cookies'))
-    cps = str(driver.execute_script('return Game.cookiesPs'))
-    next_name = str(driver.execute_script('return Game.__script_next_to_buy_name'))
-    next_price = str(driver.execute_script('return Game.__script_next_to_buy_price'))
-    meter = str(driver.execute_script('return Game.ascendMeterLevel'))
-    count = str(driver.execute_script('return Game.__script_ascend_count'))
+    status = driver.execute_script('''
+    return {
+        "cookies": Game.cookies,
+        "cps": Game.cookiesPs,
+        "next_name": Game.__script_next_name,
+        "next_price": Game.__script_next_price,
+        "ascend_meter": Game.ascendMeterLevel,
+        "ascend_count": Game.__script_ascend_count
+    }
+    ''')
+    cookies = str(status["cookies"])
+    cps = str(status["cps"])
+    next_name = str(status["next_name"])
+    next_price = str(status["next_price"])
+    meter = str(status["ascend_meter"])
+    count = str(status["ascend_count"])
 
     log = '\033[39m\033[11F\033[38C' + 'Full Auto Cookie Clicker v2.0'
 
