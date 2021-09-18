@@ -114,7 +114,7 @@ def cc_write_log(driver):
     meter = str(status["ascend_meter"])
     count = str(status["ascend_count"])
 
-    log = '\033[39m\033[11F\033[38C' + 'Full Auto Cookie Clicker v2.0'
+    log = '\033[39m\033[15F\033[38C' + 'Full Auto Cookie Clicker v2.0'
 
     log += '\033[2E\033[38C\033[K' + 'Next\t: ' + next_price + ' (' + next_name + ')'
     log += '\033[1E\033[38C\033[K' + 'Cookies\t: ' + cookies
@@ -124,7 +124,7 @@ def cc_write_log(driver):
     log += '\033[1E\033[38C\033[K' + '  Meter\t: ' + meter + ' / 250'
     log += '\033[1E\033[38C\033[K' + '  Count\t: ' + count
     #log += '\n'
-    log += '\033[3E\033[38C\033[K' + 'Press Ctrl+C to exit'
+    log += '\033[3E\033[38C\033[K' + 'Press Ctrl+C to exit' + '\033[4E'
 
     sys.stdout.write(log)
     sys.stdout.flush()
@@ -159,8 +159,7 @@ def main():
     sys.stdout.write('\033[1K')
     sys.stdout.write('\033[1F\033[K' * 8 + '\033[1E')
 
-    sys.stdout.writelines(COOKIE)
-    sys.stdout.write('\033[3F')
+    sys.stdout.writelines(COOKIE + '\n')
     sys.stdout.flush()
 
     try:
@@ -172,7 +171,7 @@ def main():
         sys.stdout.write('\033[2K')
         pass
 
-    sys.stdout.write('\033[5E' + '\033[1F\033[K' * 18)
+    sys.stdout.write('\033[1F\033[K' * 17)
     sys.stdout.flush()
 
     try:
