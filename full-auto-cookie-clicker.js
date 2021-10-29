@@ -14,6 +14,9 @@ Game.__script_next_ascend_meter = 250;
     /** setIntervalのtimeoutに指定できる最短(ms) */
     const MINIMUM_TIMEOUT = 4;
 
+    /** 秒間クリック回数(参考) */
+    const AUTOCLICK_PER_SEC = 175;
+
     /**
      * 効果を加味して購入するアップグレード一覧
      * 
@@ -420,7 +423,7 @@ Game.__script_next_ascend_meter = 250;
 
                     if (count < 3) {
                         // 2倍になる=上昇量は元のCpSに等しい
-                        return getTotalCpsOf(oCursor);
+                        return getTotalCpsOf(oCursor) + Game.computedMouseCps * AUTOCLICK_PER_SEC;
 
                     } else {
 
@@ -428,16 +431,22 @@ Game.__script_next_ascend_meter = 250;
                         let other_amount = 0;
                         for (let i = 0; i < Game.ObjectsById.length; i++) if (Game.ObjectsById[i].name != "Cursor") other_amount += Game.ObjectsById[i].amount;
                         
+                        let increase;
+
                         switch(count) {
                             case 3:
-                                return other_amount * 0.1;
+                                increase = other_amount * 0.1
                             case 4:
-                                return other_amount * ((0.1 * 5) - 0.1);
+                                increase = other_amount * ((0.1 * 5) - 0.1);
                             case 5:
-                                return other_amount * ((0.1 * 5 * 10) - (0.1 * 5));
+                                increase = other_amount * ((0.1 * 5 * 10) - (0.1 * 5));
                             default:
-                                return other_amount * ((0.1 * 5 * 10 * Math.pow(20, count - 6)) - (0.1 * 5 * 10 * Math.pow(20, count - 7)));
+                                increase = other_amount * ((0.1 * 5 * 10 * Math.pow(20, count - 6)) - (0.1 * 5 * 10 * Math.pow(20, count - 7)));
                         }
+
+                        let increase_from_cursor = increase * oCursor.amount;
+                        let increase_from_click = increase * AUTOCLICK_PER_SEC;
+                        return increase_from_cursor + increase_from_click;
                     }
                 }
                 /**
@@ -512,21 +521,25 @@ Game.__script_next_ascend_meter = 250;
         /**
          * 施設1つ分のCpSを計算する
          * 
-         * @param {Object} obj Game.Upgrades[n]
+         * @param {Object} obj Game.ObjectsById[n]
          * @returns 施設1つ分のCpS
          */
         function getSingleCpsOf(obj) {
             if (obj.amount != 0) {
                 return (obj.storedTotalCps / obj.amount) * Game.globalCpsMult;
             } else {
-                return obj.baseCps * Game.globalCpsMult;
+                if (obj.name == "Cursor") {
+                    return obj.baseCps(obj) * Game.globalCpsMult;
+                } else {
+                    return obj.baseCps * Game.globalCpsMult;
+                }
             }
         }
 
         /**
          * 施設全体のCpSを計算する
          * 
-         * @param {Object} obj Game.Upgrades[n]
+         * @param {Object} obj Game.ObjectsById[n]
          * @returns 施設全体のCpS
          */
         function getTotalCpsOf(obj) {
