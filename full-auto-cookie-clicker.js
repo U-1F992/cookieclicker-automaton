@@ -584,14 +584,36 @@ Game.__script_next_ascend_meter = 250;
         }
     }, MINIMUM_TIMEOUT);
 
+    /**
+     * Game.__script_next_ascend_meter を更新する
+     * 
+     * 購入可能なプレステージアップグレードを安価な順に並び替え、
+     * 最も安いものが250を上回る場合、その価格の4/3
+     * そうでない場合250
+     */
+    function updateNextAscendMeter(){
+
+        let toBuy = [];
+        for (let i = 0; i < Game.UpgradesById.length; i++) {
+            let oPrestige = Game.UpgradesById[i];
+            if (oPrestige.pool == "prestige" && oPrestige.name.indexOf("Permanent upgrade slot") == -1 && oPrestige.bought == 0) toBuy.push(oPrestige);
+        }
+        toBuy.sort(function(a,b) {if (a.getPrice() < b.getPrice()) {return -1;} else {return 1;}});
+        
+        Game.__script_next_ascend_meter = toBuy[0].getPrice() < 250 ? 250 : toBuy[0].getPrice() * 4 / 3;
+    }
+    let handleUpdate = setInterval(updateNextAscendMeter, MINIMUM_TIMEOUT);
+
     let while_ascend = false;
     /**
      * Heavenly ChipをGame.__script_next_ascend_meter枚稼ぐ毎にAscendする
-     * 30秒毎に確認
+     * 10秒毎に確認
      */
     setInterval(function(){
 
         if (Game.ascendMeterLevel < Game.__script_next_ascend_meter || while_ascend) return;
+
+        clearInterval(handleUpdate);
 
         while_ascend = true;
         Game.Ascend(1);
@@ -630,26 +652,9 @@ Game.__script_next_ascend_meter = 250;
                 Game.Reincarnate(1);
                 Game.__script_ascend_count++;
                 while_ascend = false;
+
+                handleUpdate = setInterval(updateNextAscendMeter, MINIMUM_TIMEOUT);
             }, 2 * 1000);
-
-            /**
-             * Game.__script_next_ascend_meter を更新する
-             * 
-             * 購入可能なプレステージアップグレードを安価な順に並び替え、
-             * 最も安いものが250を上回る場合、その価格の4/3
-             * そうでない場合250
-             */
-            function updateNextAscendMeter(){
-
-                let toBuy = [];
-                for (let i = 0; i < Game.UpgradesById.length; i++) {
-                    let oPrestige = Game.UpgradesById[i];
-                    if (oPrestige.pool == "prestige" && oPrestige.name.indexOf("Permanent upgrade slot") == -1 &&　oPrestige.canBePurchased && oPrestige.bought == 0) toBuy.push(oPrestige);
-                }
-                toBuy.sort(function(a,b) {if (a.getPrice() < b.getPrice()) {return -1;} else {return 1;}});
-                
-                Game.__script_next_ascend_meter = toBuy[0].getPrice() < 250 ? 250 : toBuy[0].getPrice() * 4 / 3;
-            }
 
         }, 5 * 1000)
     }, 10 * 1000);
