@@ -15,7 +15,7 @@ Game.__script_next_ascend_meter = 250;
     const MINIMUM_TIMEOUT = 4;
 
     /** 秒間クリック回数(参考) */
-    const AUTOCLICK_PER_SEC = 175;
+    const AUTOCLICK_PER_SEC = 8;
 
     /**
      * 効果を加味して購入するアップグレード一覧
@@ -44,7 +44,8 @@ Game.__script_next_ascend_meter = 250;
         [ 'Cookie crumbs', 'Chocolate chip cookie', 'Plain cookies', 'Sugar cookies', 'Oatmeal raisin cookies', 'Peanut butter cookies', 'Coconut cookies', 'Almond cookies', 'Hazelnut cookies', 'Walnut cookies', 'Cashew cookies', 'White chocolate cookies', 'Milk chocolate cookies', 'Macadamia nut cookies', 'Double-chip cookies', 'White chocolate macadamia nut cookies', 'All-chocolate cookies', 'Dark chocolate-coated cookies', 'White chocolate-coated cookies', 'Eclipse cookies', 'Zebra cookies', 'Snickerdoodles', 'Stroopwafels', 'Macaroons', 'Empire biscuits', 'Madeleines', 'Palmiers', 'Palets', 'Sables', 'Caramoas', 'Sagalongs', 'Shortfoils', 'Win mints', 'Gingerbread men', 'Gingerbread trees', 'Pure black chocolate cookies', 'Pure white chocolate cookies', 'Ladyfingers', 'Tuiles', 'Chocolate-stuffed biscuits', 'Checker cookies', 'Butter cookies', 'Cream cookies', 'Gingersnaps', 'Cinnamon cookies', 'Vanity cookies', 'Cigars', 'Pinwheel cookies', 'Fudge squares', 'Shortbread bisquit', 'Millionaire\'s shortbreads', 'Caramel cookies', 'Pecan sandies', 'Moravian spice cookies', 'Anzac biscuits', 'Buttercakes', 'Ice cream sandwiches', 'Pink biscuits', 'Whole-grain cookies', 'Candy cookies', 'Big chip cookies', 'One chip cookies', 'Sprinkles cookies', 'Peanut butter blossoms', 'No-bake cookies', 'Florentines', 'Chocolate crinkles', 'Maple cookies', 'Persian rice cookies', 'Norwegian cookies', 'Crispy rice cookies', 'Ube cookies', 'Butterscotch cookies', 'Speculaas', 'Chocolate oatmeal cookies', 'Molasses cookies', 'Biscotti', 'Waffle cookies', 'Custard creams', 'Bourbon biscuits', 'Mini-cookies', 'Whoopie pies', 'Caramel wafer biscuits', 'Chocolate chip mocha cookies', 'Earl Grey cookies', 'Chai tea cokkies', 'Corn syrup cookies', 'Icebox cookies', 'Graham crackers', 'Hardtack', 'Cornflake cookies', 'Tofu cookies', 'Gluten-free cookies', 'Russian bread cookies', 'Lebkuchen', 'Aachener Printen', 'Canistrelli', 'Nice biscuits', 'French pure butter cookies', 'Petit beurre', 'Nanaimo bars', 'Berger cookies', 'Chinsuko', 'Panda koala biscuits', 'Putri salju', 'Milk cookies', 'Kruidnoten', 'Marie biscuits', 'Meringue cookies', 'Yogurt cookies', 'Thumbprint cookies', 'Pizzelle', 'Granola cookies', 'Ricotta cookies', 'Roze koeken', 'Peanut butter cup cookies', 'Sesame cookies', 'Taiyaki', 'Vanillekipferl', 'Bettenberg biscuits', 'Rosette cookies', 'Gangmakers', 'Welsh cookies', 'Raspberry cheesecake cookies', 'Bokkenpootjes', 'Fat rascals', 'Ischler cookies', 'Matcha cookies', 'Butter horseshoes', 'Butter pucks', 'Butter knots', 'Butter slabs', 'Butter swirls', 'Fig gluttons', 'Loreols', 'Jaffa cakes', 'Grease\'s cups', 'Digits', 'Lombardia cookies', 'Bastenaken cookies', 'Festivity loops', 'Havabreaks', 'Zilla wafers', 'Dim Dams', 'Pokey', 'British tea biscuits', 'Chocolate british tea biscuits', 'Round british tea biscuits', 'Round chocolate british tea biscuits', 'Round british tea biscuits with heart motif', 'Round chocolate british tea biscuits with heart motif', 'Rose macarons', 'Lemon macarons', 'Chocolate macarons', 'Pistachio macarons', 'Hazelnut macarons', 'Violet macarons', 'Caramel macarons', 'Licorice macarons', 'Earl Grey macarons', 'Profiteroles', 'Jelly donut', 'Glazed donut', 'Chocolate cake', 'Strawberry cake', 'Apple pie', 'Lemon meringue pie', 'Butter croissant', 'Cookie dough', 'Burnt cookie', 'A chocolate chip cookie but with the chips picked off for some reason', 'Flavor text cookie', 'High-definition cookie', 'Crackers', 'Toast', 'Peanut butter & jelly', 'Wookies', 'Cheeseburger', 'One lone chocolate chip', 'Pizza', 'Candy', 'Skull cookies', 'Ghost cookies', 'Bat cookies', 'Slime cookies', 'Pumpkin cookies', 'Eyeball cookies', 'Spider cookies', 'Christmas tree biscuits', 'Snowflake biscuits', 'Snowman biscuits', 'Holly biscuits', 'Candy cane biscuits', 'Bell biscuits', 'Present biscuits', 'Pure heart biscuits', 'Ardent heart biscuits', 'Sour heart biscuits', 'Weeping heart biscuits', 'Golden heart biscuits', 'Eternal heart biscuits', 'Prism heart biscuits', 'Elderwort buiscuit', 'Bakeberry cookies', 'Duketater cookies', 'Wheat slims', 'Dragon cookie', 'Milk chocolate butter biscuit', 'Dark chocolate butter biscuit', 'White chocolate butter biscuit', 'Ruby chocolate butter biscuit', 'Lavender chocolate butter biscuit', 'Synthetic chocolate green honey butter biscuit', 'Royal raspberry chocolate butter biscuit', 'Ultra-concentrated high-energy chocolate butter biscuit', 'Pure pitch-black chocolate butter biscuit', 'Cosmic chocolate butter biscuit', 'Butter biscuit (with butter)' ],
         [ '', '', 'Farmer grandmas', 'Miner grandmas', 'Worker grandmas', 'Banker grandmas', 'Priestess grandmas', 'Witch grandmas', 'Cosmic grandmas', 'Transmuted grandmas', 'Altered grandmas', 'Grandmas\' grandmas', 'Antigrandmas', 'Rainbow grandmas', 'Lucky grandmas', 'Metagrandmas', 'Binary grandmas', 'Alternate grandmas' ],
         [ 'Kitten helpers', 'Kitten workers', 'Kitten engineers', 'Kitten overseers', 'Kitten managers', 'Kitten accountants', 'Kitten specialists', 'Kitten experts', 'Kitten consultants', 'Kitten assistants to the regional manager', 'Kitten marketeers', 'Kitten analysts', 'Kitten executives', 'Kitten angels', 'Fortune #103' ],
-        [ 'Bingo center/Research facility', 'Specialized chocolate chips', 'Designer cocoa beans', 'Ritual rolling pins', 'Underworld ovens', 'One mind', 'Exotic nuts', 'Communal brainsweep', 'Arcane sugar', 'Elder Pact' ]
+        [ 'Bingo center/Research facility', 'Specialized chocolate chips', 'Designer cocoa beans', 'Ritual rolling pins', 'Underworld ovens', 'One mind', 'Exotic nuts', 'Communal brainsweep', 'Arcane sugar', 'Elder Pact' ],
+        [ 'Plastic mouse', 'Iron mouse', 'Titanium mouse', 'Adamantium mouse', 'Unobtainium mouse', 'Eludium mouse', 'Wishalloy mouse', 'Fantasteel mouse', 'Neverclack mouse', 'Armythril mouse', 'Technobsidian mouse', 'Plasmarble mouse', 'Miraculite mouse' ]
     ];
 
     /**
@@ -59,7 +60,8 @@ Game.__script_next_ascend_meter = 250;
         "FLAVORED_COOKIES": 18,
         "SYNERGY_GRANDMA": 19,
         "KITTEN": 20,
-        "GRANDMAPOCALYPSE": 21
+        "GRANDMAPOCALYPSE": 21,
+        "MOUSE": 22
     };
 
     /** Flavored Cookies によってCpSにかかる効果 */
@@ -320,10 +322,13 @@ Game.__script_next_ascend_meter = 250;
      * が最小の施設
      */
     setInterval(function() {
+
+        const CPS = Game.cookiesPsRaw + (Game.computedMouseCps * AUTOCLICK_PER_SEC);
+
         // 施設
         let building_efficiency = [];
         for (let i = 0; i < Game.ObjectsById.length; i++) {
-            building_efficiency.push(Game.ObjectsById[i].getPrice() * (1 + Game.cookiesPsRaw / getSingleCpsOf(Game.ObjectsById[i])));
+            building_efficiency.push(Game.ObjectsById[i].getPrice() * (1 + CPS / getSingleCpsOf(Game.ObjectsById[i])));
         }
         
         // アップグレード
@@ -332,7 +337,7 @@ Game.__script_next_ascend_meter = 250;
             let oUpgrades = Game.UpgradesById[i];
 
             if (oUpgrades.unlocked && isUpgrade(oUpgrades) && oUpgrades.bought == 0) {
-                upgrade_efficiency.push(oUpgrades.getPrice() * (1 + Game.cookiesPsRaw / getAmountOfRise(oUpgrades)));
+                upgrade_efficiency.push(oUpgrades.getPrice() * (1 + CPS / getAmountOfRise(oUpgrades)));
             } else {
                 // 効果を加味しないで購入できるIDはInfinityで埋めて、判定から除外する
                 upgrade_efficiency.push(Infinity);
@@ -512,6 +517,10 @@ Game.__script_next_ascend_meter = 250;
                             return Infinity;
                     }
                 }
+
+                case KEY.MOUSE:
+                    return (Game.cookiesPsRaw * 0.01) * AUTOCLICK_PER_SEC;
+
                 /**
                  * Cursor以外
                  * 上昇量は現在のCpSに等しい
