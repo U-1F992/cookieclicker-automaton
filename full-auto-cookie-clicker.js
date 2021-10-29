@@ -436,12 +436,16 @@ Game.__script_next_ascend_meter = 250;
                         switch(count) {
                             case 3:
                                 increase = other_amount * 0.1
+                                break;
                             case 4:
                                 increase = other_amount * ((0.1 * 5) - 0.1);
+                                break;
                             case 5:
                                 increase = other_amount * ((0.1 * 5 * 10) - (0.1 * 5));
+                                break;
                             default:
                                 increase = other_amount * ((0.1 * 5 * 10 * Math.pow(20, count - 6)) - (0.1 * 5 * 10 * Math.pow(20, count - 7)));
+                                break;
                         }
 
                         let increase_from_cursor = increase * oCursor.amount;
