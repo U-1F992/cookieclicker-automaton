@@ -180,6 +180,7 @@ def main():
 
     options = Options()
     options.add_argument('--headless')
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
     driver = webdriver.Chrome('chromedriver', options=options)
     sys.stdout.write(".")
@@ -194,7 +195,7 @@ def main():
     
     cc_import_bkp(driver, './bkp')
 
-    js = open('full-auto-cookie-clicker.js', 'r').read()
+    js = open('full-auto-cookie-clicker.js', 'r', encoding='utf-8').read()
     driver.execute_script(js)
 
     # Erase header and "In Preparation"
