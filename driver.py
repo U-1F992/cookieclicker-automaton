@@ -92,7 +92,7 @@ def cc_import_bkp(driver, dir):
         directory to search (not recursive)
     """
     if count_files_in(dir) != 0:
-        save = open(get_latest_file(dir))
+        save = open(get_latest_file(dir), encoding='utf-8')
         driver.execute_script('Game.ImportSaveCode("' + save.read() + '");')
         save.close()
 
@@ -163,7 +163,7 @@ def cc_export_save(dir):
         directory to save
     """
     global _save
-    save = open(os.path.join(dir, 'cc_bkp_' + str(datetime.datetime.now()).replace(':', '-').replace(' ', '-').replace('.', '-').replace('-', '') + '.txt'), 'w')
+    save = open(os.path.join(dir, 'cc_bkp_' + str(datetime.datetime.now()).replace(':', '-').replace(' ', '-').replace('.', '-').replace('-', '') + '.txt'), 'w', encoding='utf-8')
     if _save != "":
         save.write(_save)
     save.close()
