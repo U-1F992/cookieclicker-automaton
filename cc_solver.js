@@ -1,3 +1,7 @@
+/**
+ * cc_solver.js v1.0
+ */
+
 Game.__script_next_name = "";
 Game.__script_next_price = 0;
 Game.__script_ascend_count = 0;

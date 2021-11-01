@@ -14,7 +14,7 @@ HEADER = """
 ################################
 ##                            ##
 ##  Full Auto Cookie Clicker  ##
-##  v2.6                      ##
+##  v2.7                      ##
 ##                            ##
 ################################
 """
@@ -194,7 +194,7 @@ def main():
     
     cc_import_bkp(driver, './bkp')
 
-    js = open('full-auto-cookie-clicker.js', 'r').read()
+    js = open('cc_solver.js', 'r').read()
     driver.execute_script(js)
 
     # Erase header and "In Preparation"
