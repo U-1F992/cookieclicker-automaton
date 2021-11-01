@@ -3,10 +3,6 @@
 
 全自動 Cookie Clicker (v2.031対応)
 
-## Version
-
-v2.6
-
 ## Requirements
 
 - Python3
@@ -32,7 +28,7 @@ sudo mv chromedriver /usr/bin/
 
 # confirm
 which google-chrome
-which chrome-driver
+which chromedriver
 ```
 
 ## 基本方針
@@ -44,13 +40,12 @@ which chrome-driver
 
 ## 平行要素
 
-- 自動クリック(実測 150~200回/s)
+- 自動クリック
 - Golden Cookieは常時監視して瞬時に潰す
 - 全てのwrinklerを瞬時に潰す
 - 上記以外のアップグレードは購入可能時に逐次購入する
   - 基本方針に割り込みが発生し、購入順序が変わる可能性がある
-- Heavenly Chipを250枚稼ぐ毎にAscendする
-  - 2回目以降、最も安いプレステージアップグレードの価格が250を上回った場合その価格の4/3まで稼ぐ
+- Heavenly Chipを「最も安いプレステージアップグレードの価格の4/3」と250の多い方まで稼ぐ
   - 7秒後にReincarnate
 - 30分毎にセーブデータを ```./bkp``` 以下に保存する
 - 終了時にセーブデータを出力する
