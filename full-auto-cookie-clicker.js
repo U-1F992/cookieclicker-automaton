@@ -1,4 +1,3 @@
-
 Game.__script_next_name = "";
 Game.__script_next_price = 0;
 Game.__script_ascend_count = 0;
@@ -601,8 +600,8 @@ Game.__script_next_ascend_meter = 250;
         toBuy.sort(function(a,b) {if (a.getPrice() < b.getPrice()) {return -1;} else {return 1;}});
         
         Game.__script_next_ascend_meter = toBuy[0].getPrice() < 250 ? 250 : toBuy[0].getPrice() * 4 / 3;
-    }
-    let handleUpdate = setInterval(updateNextAscendMeter, MINIMUM_TIMEOUT);
+    };
+    updateNextAscendMeter();
 
     let while_ascend = false;
     /**
@@ -612,8 +611,6 @@ Game.__script_next_ascend_meter = 250;
     setInterval(function(){
 
         if (Game.ascendMeterLevel < Game.__script_next_ascend_meter || while_ascend) return;
-
-        clearInterval(handleUpdate);
 
         while_ascend = true;
         Game.Ascend(1);
@@ -652,8 +649,6 @@ Game.__script_next_ascend_meter = 250;
                 Game.Reincarnate(1);
                 Game.__script_ascend_count++;
                 while_ascend = false;
-
-                handleUpdate = setInterval(updateNextAscendMeter, MINIMUM_TIMEOUT);
             }, 2 * 1000);
 
         }, 5 * 1000)
