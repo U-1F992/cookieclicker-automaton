@@ -8,9 +8,8 @@ Game.__script_next_price = 0;
 Game.__script_ascend_count = 0;
 /** 
  * Ascendするまでに稼ぐHeavenlyChip数
- * 初期値は250
  */
-Game.__script_next_ascend_meter = 250;
+Game.__script_next_ascend_meter = 0;
 
 (function(){
     "use strict";
@@ -20,6 +19,8 @@ Game.__script_next_ascend_meter = 250;
 
     /** 秒間クリック回数(参考) */
     const AUTOCLICK_PER_SEC = 8;
+
+    const MIN_ASCEND_METER = 100;
 
     /**
      * 効果を加味して購入するアップグレード一覧
@@ -592,8 +593,8 @@ Game.__script_next_ascend_meter = 250;
      * Game.__script_next_ascend_meter を更新する
      * 
      * 購入可能なプレステージアップグレードを安価な順に並び替え、
-     * 最も安いものが250を上回る場合、その価格の4/3
-     * そうでない場合250
+     * 最も安いものがINIT_ASCEND_METERを上回る場合、その価格の4/3
+     * そうでない場合MIN_ASCEND_METER
      */
     function updateNextAscendMeter(){
 
@@ -604,7 +605,7 @@ Game.__script_next_ascend_meter = 250;
         }
         toBuy.sort(function(a,b) {if (a.getPrice() < b.getPrice()) {return -1;} else {return 1;}});
         
-        Game.__script_next_ascend_meter = toBuy[0].getPrice() < 250 ? 250 : toBuy[0].getPrice() * 4 / 3;
+        Game.__script_next_ascend_meter = toBuy[0].getPrice() < MIN_ASCEND_METER ? MIN_ASCEND_METER : toBuy[0].getPrice() * 4 / 3;
     };
     updateNextAscendMeter();
 
