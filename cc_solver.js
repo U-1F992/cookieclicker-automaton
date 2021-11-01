@@ -1,5 +1,6 @@
 /**
- * cc_solver.js v1.0
+ * cc_solver.js
+ * v1.0
  */
 
 Game.__script_next_name = "";
