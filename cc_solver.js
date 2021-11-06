@@ -313,7 +313,7 @@ Game.__script_next_ascend_meter = 0;
     const UPGRADE_TO_BYPASS = [ 'Elder Pledge', 'Sacrificial rolling pins', 'Elder Covenant', 'Revoke Elder Covenant' ];
 
     /** 自動クリック */
-    setInterval(function() {Game.ClickCookie();}, MINIMUM_TIMEOUT);
+    setInterval(function() {if (while_ascend) return;Game.ClickCookie();}, MINIMUM_TIMEOUT);
 
     /** ログ表示量を減らす */
     let log = {
@@ -327,7 +327,7 @@ Game.__script_next_ascend_meter = 0;
      * が最小の施設
      */
     setInterval(function() {
-
+        if (while_ascend) return;
         const CPS = Game.cookiesPsRaw + (Game.computedMouseCps * AUTOCLICK_PER_SEC);
 
         // 施設
@@ -577,6 +577,7 @@ Game.__script_next_ascend_meter = 0;
 
     /** ストアに並んだ、計算に含めないアップグレードを購入する */
     setInterval(function(){
+        if (while_ascend) return;
         // canBuy()で購入可否判定
         // 既に買ったものはbought==1で弾く
         for (let i = 0; i < Game.UpgradesInStore.length; i++){
