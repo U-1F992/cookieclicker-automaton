@@ -1,6 +1,6 @@
 /**
  * cc_solver.js
- * v1.0
+ * v1.1
  */
 
 Game.__script_next_name = "";
@@ -596,16 +596,26 @@ Game.__script_next_ascend_meter = 0;
      * 最も安いものがINIT_ASCEND_METERを上回る場合、その価格の4/3
      * そうでない場合MIN_ASCEND_METER
      */
-    function updateNextAscendMeter(){
+     function updateNextAscendMeter(){
 
         let toBuy = [];
         for (let i = 0; i < Game.UpgradesById.length; i++) {
             let oPrestige = Game.UpgradesById[i];
-            if (oPrestige.pool == "prestige" && oPrestige.name.indexOf("Permanent upgrade slot") == -1 && oPrestige.bought == 0) toBuy.push(oPrestige);
+            if (oPrestige.pool == "prestige" && oPrestige.bought == 0 && notLucky(oPrestige)) toBuy.push(oPrestige);
         }
         toBuy.sort(function(a,b) {if (a.getPrice() < b.getPrice()) {return -1;} else {return 1;}});
-        
+        console.log(toBuy[0].name);
         Game.__script_next_ascend_meter = toBuy[0].getPrice() < MIN_ASCEND_METER ? MIN_ASCEND_METER : toBuy[0].getPrice() * 4 / 3;
+
+        // Lucky ~を避ける
+        // 購入できない可能性があるため
+        function notLucky(obj) {
+            if (obj.name == "Lucky digit" || obj.name == "Lucky number" || obj.name == "Lucky payout") {
+                return false;
+            } else {
+                return true;
+            }
+        }
     };
     updateNextAscendMeter();
 
@@ -625,13 +635,13 @@ Game.__script_next_ascend_meter = 0;
             let oLegacy = Game.UpgradesById[363];
             if (oLegacy.bought == 0 && oLegacy.getPrice() <= Game.heavenlyChips) oLegacy.buy();
 
-            // "Permanent upgrade slot" 以外のprestigeを購入できるだけ購入する
+            // prestigeを購入できるだけ購入する
             let toBuy;
             do {
                 toBuy = [];
                 for (let i = 0; i < Game.UpgradesById.length; i++) {
                     let oPrestige = Game.UpgradesById[i];
-                    if (oPrestige.pool == "prestige" && oPrestige.name.indexOf("Permanent upgrade slot") == -1 && oPrestige.canBePurchased && oPrestige.bought == 0 && oPrestige.getPrice() <= Game.heavenlyChips) toBuy.push(oPrestige);
+                    if (oPrestige.pool == "prestige" && oPrestige.canBePurchased && oPrestige.bought == 0 && oPrestige.getPrice() <= Game.heavenlyChips) toBuy.push(oPrestige);
                 }
 
                 // 配列を価格の順番に並び替える
@@ -642,12 +652,20 @@ Game.__script_next_ascend_meter = 0;
                         return 1;
                     }
                 });
+                if (toBuy.length == 0) break;
 
+                console.log(toBuy[0].name);
                 // 最も安いものを買う
                 // 依存関係を再構築して再度一番安いものを検索する
-                try {
+                if (toBuy[0].name.indexOf("Permanent upgrade slot") == -1) {
                     toBuy[0].buy();
-                } catch (e) {}
+                
+                } else {
+                    // Permanent upgrade slotの選択をカットする
+                    // 効果は発揮されないが止まるよりはマシか
+                    toBuy[0].buy();
+                    Game.ClosePrompt();
+                }
             } while (toBuy.length != 0);
             updateNextAscendMeter();
 
@@ -658,7 +676,7 @@ Game.__script_next_ascend_meter = 0;
             }, 2 * 1000);
 
         }, 5 * 1000)
-    }, 10 * 1000);
+    }, MINIMUM_TIMEOUT);
 
     /**
      * UPGRADE_NAME に登録されたアップグレードは、施設と同時に効果を加味して購入する
