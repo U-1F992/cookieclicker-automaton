@@ -605,7 +605,7 @@ Game.__script_next_ascend_meter = 0;
         }
         toBuy.sort(function(a,b) {if (a.getPrice() < b.getPrice()) {return -1;} else {return 1;}});
         console.log(toBuy[0].name);
-        Game.__script_next_ascend_meter = toBuy[0].getPrice() < MIN_ASCEND_METER ? MIN_ASCEND_METER : toBuy[0].getPrice() * 4 / 3;
+        Game.__script_next_ascend_meter = toBuy[0].getPrice() <= MIN_ASCEND_METER ? MIN_ASCEND_METER : toBuy[0].getPrice() * 4 / 3;
 
         // Lucky ~を避ける
         // 購入できない可能性があるため
