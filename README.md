@@ -1,5 +1,4 @@
-
-# Full Auto Cookie Clicker
+# cookieclicker-automaton
 
 全自動 Cookie Clicker (v2.031対応)
 
