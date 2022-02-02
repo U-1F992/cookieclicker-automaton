@@ -1,3 +1,9 @@
+###
+### Sample:
+###   run: docker run -it -v bkp:/usr/local/cookieclicker-automaton/bkp --name=cookieclicker-automaton cookieclicker-automaton
+###   start: docker start -i cookieclicker-automaton
+###   stop: ctrl+c
+###
 ARG VERSION_CHROMEDRIVER="98.0.4758.48"
 
 FROM debian:11
