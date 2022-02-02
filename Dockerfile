@@ -1,6 +1,6 @@
 ###
 ### Sample:
-###   run: docker run -it -v bkp:/usr/local/cookieclicker-automaton/bkp --name=cookieclicker-automaton cookieclicker-automaton
+###   run: docker run -it -v $PWD\bkp:/usr/local/cookieclicker-automaton/bkp --name=cookieclicker-automaton cookieclicker-automaton
 ###   start: docker start -i cookieclicker-automaton
 ###   stop: ctrl+c
 ###
